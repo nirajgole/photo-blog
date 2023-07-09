@@ -1,16 +1,24 @@
 """entrypoint"""
-from fastapi import FastAPI
+from fastapi import FastAPI,APIRouter, Depends,HTTPException,status
 from fastapi.responses import FileResponse
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
+
+from datetime import datetime, timedelta
+from jose import JWTError, jwt
+from passlib.context import CryptContext
 
 from config import settings
-from db.session import engine
-from db.base import Base
+from db.session import create_tables
 
-from routers.user_routes import user
+from routers.user_routes import user_route
 
-def create_tables():
-    Base.metadata.create_all(bind=engine)
+# from routers.user_routes import user
+
+# SECRET_KEY=''
+# ALGORITHM='HS256'
+# ACCESS_TOKEN_EXPIRE_MINUTES= 30
+
 
 def start_application():
     create_tables()
@@ -26,10 +34,20 @@ app.add_middleware(
     allow_headers=["*"]
 )
 
-app.include_router(user)
+app.include_router(user_route)
 
 FAVICON_PATH = './favicon.ico'
 @app.get('/favicon.ico', include_in_schema=False)
 async def favicon():
     """favicon"""
     return FileResponse(FAVICON_PATH)
+
+
+# oauth_2_scheme=OAuth2PasswordBearer(tokenUrl='token')
+
+
+
+# @app.get('/')
+# async def index(token:str=Depends(oauth_2_scheme)):
+#     return {'the_token':token}
+
