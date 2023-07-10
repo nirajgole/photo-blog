@@ -24,10 +24,16 @@ to create virtual environment run `py -m virtualenv venv`\
 activate virtual env `.\venv\Scripts\activate`\
 install fastapi and uvicorn using pip install command: `pip install fastapi sqlalchemy pymysql pymysql[rsa] uvicorn`\
 run app `uvicorn main:app --reload`\
-get dependencies `pip freeze > dependencies.txt`\
+get dependencies `pip freeze > requirements.txt`\
 access api docs `http://localhost:8000/docs` | `http://localhost:8000/redoc`\
 generate python linting configuration `py -m pylint --generate-rcfile > ./pylintrc`
 
 # Authentication and Authorization
 install python modules ``\
 get secret key `openssl rand -hex 32` -> run this command on `git-bash` terminal\
+
+# Generic database migration
+install alembic `py -m pip install alembic`
+create ini file at root where main.py resides `alembic init alembic`
+change alembic.ini -> sqlalchemy.url = `your_database_URL`
+to create migration revision files `alembic revision --autogenerate -m "your commit message"`
