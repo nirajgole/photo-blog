@@ -1,5 +1,5 @@
 from fastapi import APIRouter, Depends, HTTPException, status
-from user.schema import User as UserSchema
+from user.schema import User as UserSchema,UserOut
 from db.session import get_session
 from user.model import User
 from sqlalchemy.orm import Session
@@ -10,6 +10,7 @@ import os
 
 oauth_2_scheme=OAuth2PasswordBearer(tokenUrl='token')
 
+#replace opensssl secret key
 JWT_SECRET=os.getenv('JWT_SECRET')
 
 user_route = APIRouter()
@@ -49,7 +50,7 @@ async def get_user(username: str, session: Session = Depends(get_session)):
     return session.query(User).get(username)
 
 
-@user_route.post('/user')
+@user_route.post('/register')
 async def create_user(user: UserSchema, session: Session = Depends(get_session)):
     # implement email already exists
     item = User(email=user.email, password=bcrypt.hash(user.password), name=user.name,username=user.username)
@@ -59,8 +60,8 @@ async def create_user(user: UserSchema, session: Session = Depends(get_session))
     return f'{item.name} user added successfully!'
 
 
-@user_route.put('/user/{username}',response_model=UserSchema)
-async def update_user(username: str, user: UserSchema=Depends(get_current_user), session: Session = Depends(get_session)):
+@user_route.put('/user/{username}',response_model=UserOut)
+async def update_user(username: str, user:UserSchema, session: Session = Depends(get_session)):
     item = session.query(User).get(username)
     # item=UserSchema.as_dict(item)
     item.name = user.name
