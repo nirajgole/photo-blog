@@ -2,7 +2,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 # from db.session import engine
 from db.base import Base
-from config import settings
+from db.config import settings
 
 
 SQLALCHEMY_DATABASE_URL = settings.DB_URL

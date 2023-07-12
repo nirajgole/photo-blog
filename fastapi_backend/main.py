@@ -11,7 +11,7 @@ from passlib.context import CryptContext
 from config import settings
 from db.session import create_tables
 
-from routers.user_routes import user_route
+from user.routes import user_route
 
 # from routers.user_routes import user
 

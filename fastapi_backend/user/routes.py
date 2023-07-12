@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends, HTTPException, status
-from schemas.user import User as UserSchema
+from user.schema import User as UserSchema
 from db.session import get_session
-from db.models.user import User
+from user.model import User
 from sqlalchemy.orm import Session
 from passlib.hash import bcrypt
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
@@ -16,6 +16,7 @@ user_route = APIRouter()
 
 @user_route.post('/token')
 async def get_token(form_data:OAuth2PasswordRequestForm=Depends(),session: Session = Depends(get_session)):
+    """"""
     user=await authenticate_user(form_data.username,form_data.password,session)
     if not user:
         return {'error':'Invalid Credentials'}
