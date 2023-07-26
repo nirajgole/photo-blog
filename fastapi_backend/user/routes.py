@@ -1,11 +1,11 @@
 from typing import Annotated
-from fastapi import APIRouter, Depends, HTTPException, status
-from user.schema import User as UserSchema,UserOut,UserInDB
+from fastapi import APIRouter, Depends, HTTPException, status,Response
+from user.schema import User as UserSchema,UserOut,UserInDB,Token
 from db.session import get_session
 from user.model import User
 from sqlalchemy.orm import Session
 from passlib.hash import bcrypt
-from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
+from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm, OAuth2PasswordBearerWithCookie
 from jose import JWTError, jwt
 import os
 
@@ -13,7 +13,7 @@ oauth_2_scheme=OAuth2PasswordBearer(tokenUrl='login')
 
 #replace opensssl secret key
 JWT_SECRET=os.getenv('JWT_SECRET')
-
+ACCESS_TOKEN_EXPIRE_MINUTES=os.getenv('ACCESS_TOKEN_EXPIRE_MINUTES')
 user_route = APIRouter()
 
 # @user_route.post('/testing')
@@ -21,8 +21,11 @@ user_route = APIRouter()
 #     print(user.username,user.password)
 #     return user.username
 
-@user_route.post('/login')
-async def get_token(form_data:UserInDB,session:Session=Depends(get_session)):
+
+
+
+@user_route.post('/login',response_model=Token)
+async def get_token(response:Response,form_data:UserInDB,session:Session=Depends(get_session)):
     print(form_data,'form_data')
     user=await authenticate_user(form_data.username,form_data.password,session)
     if not user:

@@ -17,4 +17,3 @@ class User(Base):
         return bcrypt.verify(pwd,self.password)
 
 
-
