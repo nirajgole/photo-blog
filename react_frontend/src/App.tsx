@@ -7,23 +7,10 @@ const App = () => {
 
   const handleLogin = async () => {
     console.log({ userName, password })
-    // const username = userName
-    // await authAPI
-    //   .login({ username, password })
-    //   .then(res => console.log(res))
-    //   .catch(err => console.error(err))
-    const formData = new FormData()
-    formData.append('username', userName)
-    formData.append('password', password)
-    await client.post('/login', { data: formData }).then(res => alert(res.data))
-    // try {
-    //   const response = await authAPI.login({ userName, password })
-    //   console.log(response)
-    //   const cookies = response.headers['set-cookie']
-    //   console.log(cookies)
-    // } catch (err) {
-    //   console.error(err)
-    // }
+    await authAPI
+      .login({ username: userName, password: password })
+      .then(res => console.log(res))
+      .catch(err => console.log(err))
   }
 
   return (

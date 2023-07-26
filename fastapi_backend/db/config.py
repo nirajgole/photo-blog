@@ -15,10 +15,10 @@ class Settings:
     # DB_URL=f'mysql+pymysql://{DB_USER}:{DB_PASSWORD}@{DB_SERVER}:{DB_PORT}/{DB_NAME}'
 
     # mssql connection
-    server = "N7\MSSQL"
-    database = "test"
+    # server = "N7\MSSQL"
+    # database = "test"
     driver = "ODBC+Driver+17+for+SQL+Server"
-    DB_URL = f"mssql+pyodbc://{server}/{database}?trusted_connection=yes&driver={driver}"
+    DB_URL = f"mssql+pyodbc://{DB_SERVER}/{DB_NAME}?trusted_connection=yes&driver={driver}"
 
 settings = Settings()
 

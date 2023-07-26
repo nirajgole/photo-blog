@@ -22,14 +22,13 @@ user_route = APIRouter()
 #     return user.username
 
 @user_route.post('/login')
-async def get_token(form_data:OAuth2PasswordRequestForm=Depends(),session:Session=Depends(get_session)):
+async def get_token(form_data:UserInDB,session:Session=Depends(get_session)):
     print(form_data,'form_data')
     user=await authenticate_user(form_data.username,form_data.password,session)
     if not user:
         return {'error':'Invalid Credentials'}
 
     user_obj= UserSchema.as_dict(user)
-    print(user_obj)
 
     tkn = jwt.encode(user_obj,JWT_SECRET)
 

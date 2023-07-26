@@ -1,4 +1,4 @@
-type Auth = {
+interface Auth  {
   username: string
   password: string
 }

@@ -3,18 +3,20 @@ import { Auth } from './authModel'
 
 const client = axios.create({
   baseURL: 'http://localhost:8000/',
-  // responseType: 'json',
+  responseType: 'json',
   headers: {
     'Content-Type': 'application/json',
-    'Access-Control-Allow-Origin': '*'
-  }
-  // withCredentials: true
+    'Access-Control-Allow-Origin': '*',
+    
+  },
+  withCredentials: true
 })
+
 
 const auth = () => {
   return {
     async login(credential: Auth) {
-      return await client.post('/testing', credential)
+      return await client.post('/login', credential)
     }
   }
 }

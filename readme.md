@@ -29,6 +29,7 @@ run app `uvicorn main:app --reload`\
 get dependencies `pip freeze > requirements.txt`\
 access api docs `http://localhost:8000/docs` | `http://localhost:8000/redoc`\
 generate python linting configuration `py -m pylint --generate-rcfile > ./pylintrc`
+if there is existing requirements file is there, user can install requirement from same `pip install -r .\requirements.txt`
 
 # Authentication and Authorization
 install python modules ``\
