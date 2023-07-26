@@ -1,7 +1,9 @@
+[markdown basic syntax](https://www.markdownguide.org/basic-syntax/)
+
 create main folder `photo-blog`\
 added `readme.md`\
 create sub-folder `fastapi-backend`\
-create sub-folder `react-backend`\
+create sub-folder `react-backend`
 
 # Github
 initiated main folder with git `git init`\
@@ -30,10 +32,18 @@ generate python linting configuration `py -m pylint --generate-rcfile > ./pylint
 
 # Authentication and Authorization
 install python modules ``\
-get secret key `openssl rand -hex 32` -> run this command on `git-bash` terminal\
+get secret key `openssl rand -hex 32` -> run this command on `git-bash` terminal
 
 # Generic database migration
-install alembic `py -m pip install alembic`
-create ini file at root where main.py resides `alembic init alembic`
-change alembic.ini -> sqlalchemy.url = `your_database_URL`
+install alembic `py -m pip install alembic`\
+create ini file at root where main.py resides `alembic init alembic`\
+change alembic.ini -> sqlalchemy.url = `your_database_URL`\
 to create migration revision files `alembic revision --autogenerate -m "your commit message"`
+
+# React Frontend setup
+switch to folder `react_frontend`\
+initialize npm project by running `npm create vite .`
+- select framework `React`
+- select a variant `TypeScript + SWC`
+- install dependencies from package.json `npm i`
+>[vite](https://vitejs.dev) | [react](https://react.dev) | [typescript](https://www.typescriptlang.org/) | [swc](https://swc.rs/)

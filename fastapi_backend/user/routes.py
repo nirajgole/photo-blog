@@ -1,5 +1,6 @@
+from typing import Annotated
 from fastapi import APIRouter, Depends, HTTPException, status
-from user.schema import User as UserSchema,UserOut
+from user.schema import User as UserSchema,UserOut,UserInDB
 from db.session import get_session
 from user.model import User
 from sqlalchemy.orm import Session
@@ -8,26 +9,33 @@ from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from jose import JWTError, jwt
 import os
 
-oauth_2_scheme=OAuth2PasswordBearer(tokenUrl='token')
+oauth_2_scheme=OAuth2PasswordBearer(tokenUrl='login')
 
 #replace opensssl secret key
 JWT_SECRET=os.getenv('JWT_SECRET')
 
 user_route = APIRouter()
 
-@user_route.post('/token')
-async def get_token(form_data:OAuth2PasswordRequestForm=Depends(),session: Session = Depends(get_session)):
-    """"""
+# @user_route.post('/testing')
+# async def fetch_users(user:UserInDB):
+#     print(user.username,user.password)
+#     return user.username
+
+@user_route.post('/login')
+async def get_token(form_data:OAuth2PasswordRequestForm=Depends(),session:Session=Depends(get_session)):
+    print(form_data,'form_data')
     user=await authenticate_user(form_data.username,form_data.password,session)
     if not user:
         return {'error':'Invalid Credentials'}
 
     user_obj= UserSchema.as_dict(user)
+    print(user_obj)
 
     tkn = jwt.encode(user_obj,JWT_SECRET)
 
     return {'access_token':tkn,'token_type':'bearer'}
 
+@user_route.post('/is_logged_in')
 async def get_current_user(token:str=Depends(oauth_2_scheme)):
     try:
         user=jwt.decode(token,JWT_SECRET,algorithms=['HS256'])
@@ -90,7 +98,7 @@ async def authenticate_user(username:str,password:str,session:Session):
     return user
 
 
-@user_route.get('/login',response_model=UserSchema)
-async def do_login(user:UserSchema=Depends(get_current_user)):
-    return user
+# @user_route.get('/login',response_model=UserSchema)
+# async def do_login(user:UserSchema=Depends(get_current_user)):
+#     return user
 
