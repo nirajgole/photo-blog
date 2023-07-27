@@ -1,8 +1,10 @@
 """entrypoint"""
-from fastapi import FastAPI,APIRouter, Depends,HTTPException,status
-from fastapi.responses import FileResponse
+from fastapi import FastAPI,APIRouter, Depends,HTTPException,status,Response,Cookie
+from fastapi.responses import FileResponse,JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
+
+from typing import Optional
 import uvicorn
 
 from datetime import datetime, timedelta
@@ -29,10 +31,11 @@ app = start_application()
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins="http://127.0.0.1:5173/",
+    allow_origins=["*"],
+    # allow_origins=["http://127.0.0.1:5173"],
     allow_credentials=True,
     allow_methods=["*"],
-    allow_headers=["*"]
+    allow_headers=["*"],
 )
 
 app.include_router(user_route)
@@ -43,6 +46,14 @@ async def favicon():
     """favicon"""
     return FileResponse(FAVICON_PATH)
 
+# @app.get('/set')
+# def set_cookie(response:Response):
+#     response.set_cookie(key='refresh_token', value='helloworld', httponly=True)
+#     return response
+
+# @app.get('/read')
+# def read_cookie(refresh_token:Optional[str] = Cookie(None)):
+#     return response
 
 # oauth_2_scheme=OAuth2PasswordBearer(tokenUrl='token')
 
@@ -52,5 +63,5 @@ async def favicon():
 # async def index(token:str=Depends(oauth_2_scheme)):
 #     return {'the_token':token}
 
-if __name__ == "__main__":
-    uvicorn.run("main:app", host="127.0.0.1", port=8000, reload=True)
+# if __name__ == "__main__":
+#     uvicorn.run("main:app", host="127.0.0.1", port=8000, reload=True)

@@ -6,8 +6,7 @@ const client = axios.create({
   responseType: 'json',
   headers: {
     'Content-Type': 'application/json',
-    'Access-Control-Allow-Origin': '*',
-    
+    'Access-Control-Allow-Origin': 'http://127.0.0.1:5173/',
   },
   withCredentials: true
 })
@@ -16,6 +15,7 @@ const client = axios.create({
 const auth = () => {
   return {
     async login(credential: Auth) {
+      console.log(credential)
       return await client.post('/login', credential)
     }
   }

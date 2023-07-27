@@ -1,17 +1,29 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { authAPI } from '../auth/authAPI'
+import {  useAuth } from '../App';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 export default function LoginView(){
   const [userName, setUserName] = useState('')
   const [password, setPassword] = useState('')
+  const { isLoggedIn, setIsLoggedIn} = useAuth();
+  const navigate = useNavigate();
+  const location = useLocation();
 
   const handleLogin = async () => {
+    if (isLoggedIn) return;
+    setIsLoggedIn( true);
+
+    if (location.state?.from) {
+      navigate(location.state.from);
+    }
     console.log({ userName, password })
     await authAPI
       .login({ username: userName, password: password })
-      .then(res => console.log(res))
+      .then(res => console.log(res.data))
       .catch(err => console.log(err))
   }
+
 
   return (
     <div>
