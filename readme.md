@@ -48,3 +48,8 @@ initialize npm project by running `npm create vite .`
 - select a variant `TypeScript + SWC`
 - install dependencies from package.json `npm i`
 >[vite](https://vitejs.dev) | [react](https://react.dev) | [typescript](https://www.typescriptlang.org/) | [swc](https://swc.rs/)
+
+
+# Note:
+- To make login work successfully on frontend set allow-access-origins to wildcards and withCredentials=False at both end
+- But to set-cookie header work on frontend you need to make credentials true at both end and allow-origins true in frontend and add frontend url to allow-origins of backend

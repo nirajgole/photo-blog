@@ -7,7 +7,7 @@ const client = axios.create({
   headers: {
     // 'Accept':'application/json',
     'Content-Type': 'application/json',
-    'Access-Control-Allow-Origin': 'localhost'
+    'Access-Control-Allow-Origin': 'true'
   },
   withCredentials: true
 })
