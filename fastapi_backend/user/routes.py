@@ -51,7 +51,9 @@ async def get_token(user:LogInUser,session:Session=Depends(get_session)):
     cookie_params={
         'httponly':True,
         'secure':True,
-        'samesite':'none'
+        'samesite':'none',
+        # 'domain':'localhost',
+        # 'max-age':30
     }
     response.set_cookie(key="access_token",value=f"Bearer {access_token}", **cookie_params)
     return response

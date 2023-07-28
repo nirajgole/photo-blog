@@ -5,12 +5,12 @@ const client = axios.create({
   baseURL: 'http://localhost:8000/',
   responseType: 'json',
   headers: {
+    // 'Accept':'application/json',
     'Content-Type': 'application/json',
-    'Access-Control-Allow-Origin': 'http://127.0.0.1:5173/',
+    'Access-Control-Allow-Origin': '*'
   },
   withCredentials: true
 })
-
 
 const auth = () => {
   return {
